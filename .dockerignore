@@ -1,0 +1,14 @@
+node_modules
+.dockerignore
+Dockerfile
+npm-debug.log
+.git
+.hg
+.svn
+node_modules/
+package-lock.json
+Documentation/
+.DS_Store
+.vscode/
+.idea/
+.idea/vcs.xml

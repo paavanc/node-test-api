@@ -1,0 +1,7 @@
+apiVersion: v1
+data:
+  node_env: dev
+kind: ConfigMap
+metadata:
+  name: node-starter-config
+  namespace: default

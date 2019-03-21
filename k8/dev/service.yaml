@@ -1,0 +1,22 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: node-starter-service
+  namespace: default
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      name:  node-starter-service
+      rewrite: /
+      prefix: /starter/
+      service: node-starter-service:80
+spec:
+  type: NodePort
+  selector:
+    app: node-starter-server
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 4000

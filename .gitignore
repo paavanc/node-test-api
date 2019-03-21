@@ -1,0 +1,8 @@
+node_modules/
+package-lock.json
+Documentation/
+.DS_Store
+.vscode/
+.idea/
+.idea/vcs.xml
+npm-debug.log

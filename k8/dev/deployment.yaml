@@ -1,0 +1,58 @@
+apiVersion: apps/v1 # for versions before 1.8.0 use apps/v1beta1
+kind: Deployment
+metadata:
+  name: node-starter-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: node-starter-server
+  replicas: 2 # tells deployment to run 3 pods matching the template
+  template: # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: node-starter-server
+    spec:
+      imagePullSecrets:
+        - name: my-docker-credentials
+      containers:
+        - name: node-starter-server
+          image: #need to know
+          imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1000Mi
+          ports:
+            - containerPort: 4000
+              name: server
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: node-starter-config
+                  key: node_env
+          livenessProbe:
+            httpGet:
+              path: /info/version
+              port: 8080
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 1
+            periodSeconds: 60
+          readinessProbe:
+            httpGet:
+              path: /info/version
+              port: 8080
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 1
+            periodSeconds: 60
